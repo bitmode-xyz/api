@@ -2,8 +2,6 @@
   <img alt="Boundaries.io Social Logo" width="650" src="img/social.jpg">
 </p>
 
-# We've moved!
-
 Please visit https://boundaries.io for more information about the API and access.
 
 ## boundaries.io
