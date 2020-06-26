@@ -23,16 +23,20 @@ var GeographiesController = ApplicationController.extend({
   index: function* () {
     var geos = [];
     if (this.request.query.search) {
-      geos = yield this.geos.find({
-        $text: {$search: this.request.query.search}
-      }, {
-        score: {$meta: "textScore"}
-      })
-      .sort({score: {$meta: 'textScore'}})
-      .limit(this.request.query.limit || 15)
-      .toArray();
+      geos = yield this.geos
+        .find(
+          {
+            $text: { $search: this.request.query.search },
+          },
+          {
+            score: { $meta: "textScore" },
+          }
+        )
+        .sort({ score: { $meta: "textScore" } })
+        .limit(parseInt(this.request.query.limit, 10) || 15)
+        .toArray();
     }
-    this.set('geographies', geos);
+    this.set("geographies", geos);
     yield this.respondWith(geos);
   },
 
