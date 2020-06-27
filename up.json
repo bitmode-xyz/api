@@ -3,13 +3,10 @@
   "profile": "aws-up",
   "stages": {
     "production": {
-      "domain": "boundaries.io"
+      "domain": "api.boundaries.io"
     },
     "staging": {
       "domain": "staging.boundaries.io"
-    },
-    "development": {
-      "domain": "dev.boundaries.io"
     }
   },
   "proxy": {
