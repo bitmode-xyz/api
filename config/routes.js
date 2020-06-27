@@ -7,6 +7,7 @@ module.exports = function(router) {
     'neighborhoods',
     'counties'
   ].forEach(function(geo) {
+    router.get('/explore/' + geo).to('geographies/' + geo + '.explore');
     router.get('/geographies/' + geo + '/whereami').to('geographies/' + geo + '.whereami');
     router.get('/geographies/' + geo + '/nearme').to('geographies/' + geo + '.nearme');
     router.get('/geographies/' + geo + '/named/:name').to('geographies/' + geo + '.named');

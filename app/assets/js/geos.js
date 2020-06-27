@@ -1,3 +1,5 @@
+var baseURL = 'https://api.boundaries.io';
+
 var Geo = Backbone.Model.extend({
   idAttribute: '_id',
   toLatLng: function() {
@@ -70,37 +72,37 @@ var State = Geo.extend({
 
 var Geos = Backbone.Collection.extend({
   model: Geo,
-  url: '/geographies'
+  url: baseURL,
 });
 
 var CountryCollection = Geos.extend({
   model: Country,
-  url: '/geographies/countries'
+  url: baseURL + '/geographies/countries'
 });
 
 var PostalCodeCollection = Geos.extend({
   model: PostalCode,
-  url: '/geographies/postal-codes'
+  url: baseURL + '/geographies/postal-codes'
 });
 
 var PlaceCollection = Geos.extend({
   model: Place,
-  url: '/geographies/places'
+  url: baseURL + '/geographies/places'
 });
 
 var NeighborhoodCollection = Geos.extend({
   model: Neighborhood,
-  url: '/geographies/neighborhoods'
+  url: baseURL + '/geographies/neighborhoods'
 });
 
 var CountyCollection = Geos.extend({
   model: County,
-  url: '/geographies/counties'
+  url: baseURL + '/geographies/counties'
 });
 
 var StateCollection = Geos.extend({
   model: State,
-  url: '/geographies/states'
+  url: baseURL + '/geographies/states'
 });
 
 var Map = Backbone.View.extend({
@@ -297,6 +299,10 @@ var GeoQuery = Backbone.View.extend({
     if (e.keyCode === 13) {
       this.trigger('search', e);
     }
+  },
+
+  render() {
+    debugger
   }
 
 });

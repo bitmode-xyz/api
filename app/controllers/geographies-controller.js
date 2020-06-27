@@ -1,24 +1,30 @@
-var ApplicationController = require('./application-controller');
-var geojson2svg = require('geojson2svg');
-var reproject = require('reproject-spherical-mercator');
-var geojsonExtent = require('geojson-extent');
+var ApplicationController = require("./application-controller");
+var geojson2svg = require("geojson2svg");
+var reproject = require("reproject-spherical-mercator");
+var geojsonExtent = require("geojson-extent");
 
 var GeographiesController = ApplicationController.extend({
-
-  constructor: function() {
+  constructor: function () {
     ApplicationController.apply(this, arguments);
-    this.respondsTo('html', 'json', 'application/topojson');
-    this.beforeFilter('_setType', '_mountCollection');
-    this.nameKey = 'properties.NAME';
+    this.respondsTo("html", "json", "application/topojson");
+    this.beforeFilter("_setType", "_mountCollection");
+    this.afterFilter("_addCors");
+    this.nameKey = "properties.NAME";
+  },
+
+  _addCors: function* () {
+    this.response.headers["Access-Control-Allow-Origin"] = "*";
   },
 
   _setType: function* () {
-    this.set('type', this.type);
+    this.set("type", this.type);
   },
 
   _mountCollection: function* () {
     this.geos = yield this.mongo.collection(this.collection);
   },
+
+  explore: function* () {},
 
   index: function* () {
     var geos = [];
@@ -42,19 +48,18 @@ var GeographiesController = ApplicationController.extend({
 
   show: function* () {
     var geo = yield this.geos.findOne({
-      _id: this.mongo._db.bsonLib.ObjectID(this.params.id)
+      _id: this.mongo._db.bsonLib.ObjectID(this.params.id),
     });
 
     this.set({
       geography: geo,
-      renderer: this.getGeojsonSvgConverter(geo, 300, 300)
+      renderer: this.getGeojsonSvgConverter(geo, 300, 300),
     });
 
     yield this.respondWith(geo);
   },
 
   svg: function* () {
-
     var geo;
     var geometry;
     var width = this.params.width || 300;
@@ -63,15 +68,15 @@ var GeographiesController = ApplicationController.extend({
     geo = yield this.findByName(this.params.name);
     renderer = this.getGeojsonSvgConverter(geo, {
       width: width,
-      height: height
+      height: height,
     });
 
     this.render = false;
-    this.ctx.type = 'image/svg+xml';
+    this.ctx.type = "image/svg+xml";
 
     this.body = `
       <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
-        ${renderer.converter.convert(renderer.geometry).join('')}
+        ${renderer.converter.convert(renderer.geometry).join("")}
       </svg>
     `;
   },
@@ -86,14 +91,14 @@ var GeographiesController = ApplicationController.extend({
     this.set({
       geography: geo,
       renderer: this.getGeojsonSvgConverter(geo, 300, 300),
-      nameKey: this.nameKey
+      nameKey: this.nameKey,
     });
 
     yield this.respondTo({
       html: function* () {},
       json: function* () {
         this.body = geo;
-      }
+      },
     });
   },
 
@@ -107,7 +112,7 @@ var GeographiesController = ApplicationController.extend({
     yield this.respondWith(thenable);
   },
 
-  getGeojsonSvgConverter: function(geo, options) {
+  getGeojsonSvgConverter: function (geo, options) {
     options || (options = {});
     var width = options.width || 300;
     var height = options.height || 300;
@@ -120,33 +125,33 @@ var GeographiesController = ApplicationController.extend({
       left: extentTuple[0],
       bottom: extentTuple[1],
       right: extentTuple[2],
-      top: extentTuple[3]
+      top: extentTuple[3],
     };
 
     converter = geojson2svg({
       viewportSize: {
         width: width,
-        height: height
+        height: height,
       },
-      output: 'svg',
+      output: "svg",
       mapExtent: extent,
       attributes: {
-        stroke: this.params.stroke || 'none',
-        fill: this.params.fill || 'black'
+        stroke: this.params.stroke || "none",
+        fill: this.params.fill || "black",
       },
-      explode: true
+      explode: true,
     });
 
     return {
       converter: converter,
       geometry: geometry,
-      extent: extent
+      extent: extent,
     };
   },
 
   findByName: function* (name) {
     var criteria = {};
-    criteria[this.nameKey] = new RegExp(this.params.name, 'i');
+    criteria[this.nameKey] = new RegExp(this.params.name, "i");
     return yield this.geos.findOne(criteria);
   },
 
@@ -157,19 +162,19 @@ var GeographiesController = ApplicationController.extend({
     var lng = parseFloat(lng, 10);
     var where;
 
-    if (isNaN(lat) || isNaN(lng)) return this.throw(304, 'Bad Request');
-    if (!lat || !lng) return this.throw(304, 'Bad Request');
+    if (isNaN(lat) || isNaN(lng)) return this.throw(304, "Bad Request");
+    if (!lat || !lng) return this.throw(304, "Bad Request");
 
-    options = kona._.assign({limit: 1}, options);
+    options = kona._.assign({ limit: 1 }, options);
     where = {
       geometry: {
         $geoIntersects: {
           $geometry: {
-            type: 'Point',
-            coordinates: [lng, lat]
-          }
-        }
-      }
+            type: "Point",
+            coordinates: [lng, lat],
+          },
+        },
+      },
     };
 
     return yield this.geos.findOne(where, options);
@@ -182,23 +187,22 @@ var GeographiesController = ApplicationController.extend({
     var lng = parseFloat(lng, 10);
     var where;
 
-    if (isNaN(lat) || isNaN(lng)) return this.throw(304, 'Bad Request');
+    if (isNaN(lat) || isNaN(lng)) return this.throw(304, "Bad Request");
 
-    options = kona._.merge({limit: 5}, options);
+    options = kona._.merge({ limit: 5 }, options);
     where = {
       geometry: {
         $near: {
           $geometry: {
-            type: 'Point',
-            coordinates: [lng, lat]
-          }
-        }
-      }
+            type: "Point",
+            coordinates: [lng, lat],
+          },
+        },
+      },
     };
 
     return yield this.geos.find(where, options).toArray();
   },
-
 });
 
 module.exports = GeographiesController;
