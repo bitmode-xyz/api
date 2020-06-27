@@ -37,3 +37,5 @@ bower_components
 .DS_Store
 data/planet
 mongo
+
+config/environment/production.js

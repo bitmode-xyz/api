@@ -1,7 +1,4 @@
 module.exports = function(router) {
-
-  router.get('/').to('main.about');
-
   [
     'countries',
     'states',
