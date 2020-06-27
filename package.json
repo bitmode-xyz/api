@@ -5,7 +5,7 @@
     "geojson-extent": "0.3.2",
     "geojson2svg": "1.0.3",
     "koa-compress": "1.0.8",
-    "kona": "^0.10.4",
+    "kona": "0.10.5",
     "kona-mongo": "^1.0.1",
     "lodash": "4.17.15",
     "marked": "^0.3.5",
@@ -22,9 +22,7 @@
     "nodemon": "^1.9.1",
     "optimist": "0.6.1",
     "superagent": "1.5.0",
-    "supertest": "^1.1.0",
-    "vinyl-buffer": "^1.0.0",
-    "watchify": "^3.3.0"
+    "supertest": "^1.1.0"
   },
   "scripts": {
     "start": "nodemon -L app.js",

@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:6.6.0
+FROM node:12-alpine3.10
 
 RUN apk add --no-cache \
   make \
@@ -13,10 +13,10 @@ ENV NODE_ENV development
 
 WORKDIR /app
 
-ADD package.json .
+COPY package.json package-lock.json ./
 RUN npm install
 
-ADD . .
+COPY . .
 
 EXPOSE 3334
 

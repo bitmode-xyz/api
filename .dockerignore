@@ -1,2 +1,4 @@
-data/*
-mongo/*
+data
+node_modules
+Dockerfile
+mongo

@@ -103,13 +103,15 @@ var GeographiesController = ApplicationController.extend({
   },
 
   whereami: function* () {
-    var thenable = this.at(this.params.lat, this.params.lng);
-    yield this.respondWith(thenable);
+    var result = yield this.at(this.params.lat, this.params.lng);
+    if (!result) return this.throw(404);
+    yield this.respondWith(result);
   },
 
   nearme: function* () {
-    var thenable = this.near(this.params.lat, this.params.lng);
-    yield this.respondWith(thenable);
+    var result = yield this.near(this.params.lat, this.params.lng);
+    if (!result) return this.throw(404);
+    yield this.respondWith(result);
   },
 
   getGeojsonSvgConverter: function (geo, options) {
