@@ -12,10 +12,6 @@ var GeographiesController = ApplicationController.extend({
     this.nameKey = "properties.NAME";
   },
 
-  _addCors: function* () {
-    this.response.headers["Access-Control-Allow-Origin"] = "*";
-  },
-
   _setType: function* () {
     this.set("type", this.type);
   },
@@ -85,7 +81,9 @@ var GeographiesController = ApplicationController.extend({
     var geo = yield this.findByName(this.params.name);
 
     if (!geo) {
-      return this.throw(404);
+      this.status = 404;
+      this.response.nothing = true;
+      return;
     }
 
     this.set({
@@ -104,13 +102,21 @@ var GeographiesController = ApplicationController.extend({
 
   whereami: function* () {
     var result = yield this.at(this.params.lat, this.params.lng);
-    if (!result) return this.throw(404);
+    if (!result) {
+      this.status = 404;
+      this.response.nothing = true;
+      return;
+    }
     yield this.respondWith(result);
   },
 
   nearme: function* () {
     var result = yield this.near(this.params.lat, this.params.lng);
-    if (!result) return this.throw(404);
+    if (!result) {
+      this.status = 404;
+      this.response.nothing = true;
+      return;
+    }
     yield this.respondWith(result);
   },
 

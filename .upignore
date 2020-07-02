@@ -1,4 +1,9 @@
 data
+log
+test
+.github
+.git
+Dockerfile
 kube
 test
 !.env
