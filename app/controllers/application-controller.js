@@ -39,7 +39,7 @@ var ApplicationController = Controller.extend({
   },
 
   _addCors: function* () {
-    if (["localhost:3334", "boundaries.io"].includes(this.request.host)) {
+    if (["localhost:8001", "boundaries.io"].includes(this.request.host)) {
       this.ctx.set("Access-Control-Allow-Origin", "*");
       this.ctx.set(
         "Access-Control-Allow-Headers",
