@@ -1,4 +1,2 @@
-U2FsdGVkX1/dtC/mf1aQoBtFXpFaGmYn4MVAWBUSj6ABdZ1oH2zrvi6rUatqw8mt
-U/FwDrb53vxHMPwzZSMv9KrM3nFcoSqu0uDI7OlfKgHl2FMLD/JYYPGKcj4s89+D
-fYMJcC/uh31WSTxKst+AulNJTTpSiYWUYquaaPWAy6Fn89xhsFbt9c3EmqqYyLZ4
-eXCtlk8CFSohj4DgjA99sw==
+// this file is encrypted
+module.exports = function (config) {};

@@ -9,15 +9,15 @@ RUN apk add --no-cache \
   unzip \
   zlib-dev
 
-ENV NODE_ENV development
+ENV NODE_ENV production
 
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm install
+RUN npm install --production
 
 COPY . .
 
 EXPOSE 3334
 
-CMD bin/start
+CMD npm start

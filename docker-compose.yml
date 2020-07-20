@@ -1,8 +1,10 @@
-version: '2'
+version: "2"
 services:
   api:
     build: .
     command: npm start
+    environment:
+      NODE_ENV: development
     volumes:
       - .:/app
       - /app/node_modules
