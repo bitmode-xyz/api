@@ -1,4 +1,2 @@
-config/environment/production.js filter=crypt diff=crypt merge=crypt
-config/environment/staging.js filter=crypt diff=crypt merge=crypt
 .env* filter=crypt diff=crypt merge=crypt
 
