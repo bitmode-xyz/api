@@ -1,5 +1,11 @@
 var Controller = require("kona/lib/controller/request");
 
+var VALID_CORS_ORIGINS = [
+  "http://localhost:8001",
+  "https://boundaries.io",
+  "http://localhost:3000",
+];
+
 var ApplicationController = Controller.extend({
   constructor: function () {
     Controller.apply(this, arguments);
@@ -39,11 +45,7 @@ var ApplicationController = Controller.extend({
   },
 
   _addCors: function* () {
-    if (
-      ["http://localhost:8001", "https://boundaries.io"].includes(
-        this.ctx.get("Origin")
-      )
-    ) {
+    if (VALID_CORS_ORIGINS.includes(this.ctx.get("Origin"))) {
       this.ctx.set("Access-Control-Allow-Origin", "*");
       this.ctx.set(
         "Access-Control-Allow-Headers",
