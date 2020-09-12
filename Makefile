@@ -1,5 +1,5 @@
 objects=zcta5 county place state
-tiger_url=ftp://ftp2.census.gov/geo/tiger/TIGER2016
+tiger_url=ftp://ftp2.census.gov/geo/tiger/TIGER2019
 db_name=geo
 
 zcta5: zcta5.geo.json
@@ -50,24 +50,6 @@ define importAndIndex
 		--db $(db_name) \
 		< ./$<
 endef
-
-# define importAndIndex
-# 	curl -XPUT "localhost:9200/$1" -d '{\
-# 		"mappings": {\
-# 			"geo": {\
-# 				"properties": {\
-# 					"properties": {\
-# 						"type": "object"\
-# 					},\
-# 					"geometry": {\
-# 						"type": "geo_shape"\
-# 					}\
-# 				}\
-# 			}\
-# 		}\
-# 	}'; echo
-# 	cat $< | ./data/upsert $1 $2
-# endef
 
 .PRECIOUS: %.zip %.geo.json
 .INTERMEDIATE: %.tmp
