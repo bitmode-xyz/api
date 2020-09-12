@@ -12,7 +12,7 @@ boundaries.io is an API for querying and retrieving GeoJSON for US administrativ
 
 Data is sourced from US Census TIGER data—yielding up-to-date information on the census-defined geographies converted from Shapefile format.
 
-### Don't want to host this yourself?
+### Looking for a hosted version?
 
 We've got you. Head over to [boundaries.io](https://boundaries.io/?utm_source=gh&utm_content=readme#pricing) to see our pricing for access to a much faster API with the most up-to-date dataset. You can try it out for free.
 
