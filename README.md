@@ -1,8 +1,8 @@
 <p align="center">
-  <a href="https://boundaries.io?utm_source=gh&utm_content=readme" title="boundaries.io" /><img alt="Boundaries.io Social Logo" width="650" src="img/social.jpg"></a>
+  <a href="https://boundaries.io?utm_source=gh&utm_content=readme" title="Bitmode Boundaries" /><img alt="Bitmode Boundaries Social Logo" width="650" src="img/social.jpg"></a>
 </p>
 
-boundaries.io is an API for querying and retrieving GeoJSON for US administrative or common boundaries like:
+Bitmode Boundaries is an API for querying and retrieving GeoJSON for US administrative or common boundaries like:
 
 * Cities
 * Zip codes
